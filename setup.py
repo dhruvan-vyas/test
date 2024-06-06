@@ -1,19 +1,36 @@
-# setup for tests
-# import setuptools
-# setuptools.setup(
-#     name="dvs_printf",
-#     version="1.3",
-#     python_requires=">=3.10",
-#     packages=setuptools.find_packages()
-# )
+from setuptools import setup, find_packages
 
-import tensorflow as tf
-
-
-# Create a 5x3x3 tensor filled with random values
-tensor = tf.random.uniform(shape=[5,3, 3])
-
-# Print the tensor
-from dvs_printf import printf 
-print(tensor,"\n\n")
-printf(tensor,speed=5,interval=0, getmat="true")
+setup(
+    name='dvs_printf',
+    version='1.0',
+    description=
+"Animated Visual appearance for console-based applications, with different animation styles",
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    author='Dhruvan Vyas',
+    url='https://github.com/dhruvan-vyas/dvs_printf',
+    packages=find_packages(),
+    python_requires='>=3.10',
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Terminals',
+        "Environment :: Console"
+    ],
+    keywords = ["printf", "animation", "console", "terminal"],
+    license='MIT',
+    project_urls={
+        'Source': 'https://github.com/dhruvan-vyas/dvs_printf',
+        "Documentation": "https://github.com/dhruvan-vyas/dvs_printf/blob/main/README.md",
+        'Tracker': 'https://github.com/dhruvan-vyas/dvs_printf/issues'
+    },
+    include_package_data=True,
+    zip_safe=False
+)
