@@ -32,6 +32,49 @@ DataSet and add Them into a list by index.
     newa_a=[]
     for value in values:
         var_type=type(value)
+        if getmat:
+            try:
+                if "numpy" in  str(var_type):
+                    newa_a.extend(
+                [str(sublist.tolist()) for sublist in value.reshape(-1, value.shape[-1])]
+                    )
+                    if "show" in str(getmat).lower():
+                        newa_a.extend([
+    "<class 'numpy.ndarray'","dtype="+str(value.dtype)+" ","shape="+str(value.shape)+">"
+                    ])
+                    continue
+                elif "tensorflow" in str(var_type):    
+                    from tensorflow import reshape,shape;newa_a.extend(
+                [str(sublist.numpy().tolist()) for sublist in reshape(value, [-1, shape(value)[-1]])]
+                    )
+                    if "show" in str(getmat).lower():newa_a.extend([
+    "<class 'Tensorflow'",(str(value.dtype).replace("<","")).replace(">","") +" ","shape: "+str(value.shape)+">"
+                    ])
+                    continue  
+                elif "torch" in str(var_type):
+                    newa_a.extend(
+                [str(sublist.tolist()) for sublist in value.view(-1, value.size(-1))]
+                    )
+                    if "show" in str(getmat).lower():newa_a.extend([
+    "<class 'torch.Tensor'", " dtype="+str(value.dtype)+" "," shape="+str(value.shape)+">"
+                    ])
+                    continue
+                elif "pandas" in str(var_type):
+                    newa_a.extend(value.stack().apply(lambda x: str(x)).tolist())
+                    if "show" in str(getmat).lower():
+                        newa_a.extend(["<class 'pandas'"," shape="+str(value.shape)+" "+">"])
+                        newa_a.extend(
+    (str(value.dtypes).replace("\n","@#$@")).replace("    ",": ").split("@#$@")
+                    )
+                    continue
+                else: 
+                    if isinstance(value,list) and isinstance(value[0],list):
+                        newa_a.extend(listfunction(value, getmat=getmat))
+                        continue
+                    elif isinstance(value,list):
+                        newa_a.append(str(value).replace("\n"," "))
+                        continue
+            except:pass
         try:tem_len=get_terminal_size()[0]-2  
         except:tem_len=80
         if var_type==dict:
